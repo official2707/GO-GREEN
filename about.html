@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Climate Action</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #1a1a1a;
+            color: white;
+            text-align: center;
+        }
+        .container {
+            position: relative;
+            height: 300vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding-bottom: 60px; /* Added padding to ensure text is visible */
+        }
+        .title {
+            font-size: 3em;
+            margin: 0;
+            z-index: 1; /* Ensure it appears above other content */
+        }
+        .action {
+            font-size: 3em;
+            color: #00d084;
+            margin: 0;
+            z-index: 1; /* Ensure it appears above other content */
+        }
+        .social-icons {
+            margin-top: 20px;
+            z-index: 1; /* Ensure it appears above other content */
+        }
+        .social-icons i {
+            font-size: 1.5em;
+            margin: 0 10px;
+            color: white;
+        }
+        .earth-image {
+            position: absolute;
+            bottom: 100;
+            width: 100%;
+            height: 100%;
+            background: url('./jpeg') no-repeat center center/cover;
+        }
+
+        /* Gallery styling */
+        .gallery {
+            position: relative;
+            margin-top: 30px; /* Adjusted margin to create space */
+            width: 100%;
+            height: 250px;
+            overflow: hidden; /* Added to hide overflow */
+        }
+        .gallery-track {
+            display: flex;
+            width: calc(200px * 6); /* Adjusted to fit all images */
+            animation: slide 15s linear infinite;
+        }
+        .gallery img {
+            width: 400px;
+            height: 250px;
+            margin: 0 10px;
+            border-radius: 10px;
+        }
+
+        @keyframes slide {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+
+        /* Personal experience section */
+        .personal-experience {
+            margin-top: 50px;
+            padding: 20px;
+            display: flex;
+            align-items: left;
+            justify-content: left;
+        }
+        .profile-picture {
+            width: 250px;
+            height: 250px;
+            margin-right: 20px;
+            background-image: url('/mnt/data/image.png'); /* Updated to use your uploaded profile image */
+            background-size: cover;
+            background-position: center;
+        }
+        .experience-text {
+            max-width: 600px;
+            text-align: left;
+            font-size: 1.2em;
+            line-height: 1.6;
+        }
+        .experience-text h2 {
+            color: #00d084;
+            margin-bottom: 25px;
+        }
+
+        /* Added for the image beside the paragraph */
+        .personal-experience-image {
+            margin-left: 100px;
+            width: 350px;
+            height: 350px;
+            background-image: url('image3.jpeg'); /* Updated to add the photo2.jpeg */
+            background-size: cover;
+            background-position: left;
+            border-radius: 10px;
+        }
+
+        /* Tasks and steps section */
+        .tasks-steps {
+            margin-top: 50px;
+            padding: 40px;
+            background-color: #2b2b2b;
+            color: white;
+            border-radius: 10px;
+            text-align: left;
+        }
+        .tasks-steps h2 {
+            color: #00d084;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        .tasks-steps p {
+            font-size: 1.2em;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        .tasks-steps ul {
+            margin-left: 40px;
+            list-style-type: disc;
+        }
+        .tasks-steps ul li {
+            font-size: 1.1em;
+            line-height: 1.8;
+        }
+
+        /* Consequences of inaction section */
+        .consequences {
+            margin-top: 30px;
+            padding: 30px;
+            background-color: #383838;
+            color: #f44336;
+            border-radius: 10px;
+            text-align: left;
+        }
+        .consequences h2 {
+            color: #f44336;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        .consequences p {
+            font-size: 1.2em;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">RISE FOR CLIMATE</h1>
+        <h1 class="action">ACTION!</h1>
+        <div class="social-icons">
+            <i class="fab fa-instagram"></i>
+            <i class="fab fa-twitter"></i>
+            <i class="fab fa-facebook"></i>
+            <i class="fab fa-youtube"></i>
+        </div>
+
+        <!-- Add a sliding gallery beneath the icons -->
+        <div class="gallery">
+            <div class="gallery-track">
+                <img src="photo1.jpeg">
+                <img src="photo2.jpeg">
+                <img src="photo3.jpeg">
+                <img src="photo11.jpeg">
+                <img src="photo10.jpeg">
+                <img src="photo1.jpeg">
+                <img src="photo2.jpeg">
+                <img src="photo3.jpeg">
+                <img src="photo4.jpeg">
+                <img src="photo5.jpeg">
+                <img src="photo6.webp">
+                <img src="photo7.jpeg">
+                <img src="photo8.webp">
+                <img src="photo9.webp">
+            </div>
+        </div>
+
+        <!-- Personal Experience Section -->
+        <div class="personal-experience">
+            <div class="profile-picture" style="background-image: url('/mnt/data/image.png');"></div>
+            <div class="experience-text">
+                <h2>My Journey in Reducing Carbon Footprints</h2>
+                <p>
+                    Over the past few years, I've made significant changes to my lifestyle to help reduce my carbon footprint. 
+                    From adopting sustainable transportation methods to cutting down on plastic usage, every small step has 
+                    made a noticeable difference in both my life and the environment around me.
+                    I have noticed how much greener and cleaner my surroundings have become, and the positive impact it’s had 
+                    on local wildlife has been truly heartwarming. It’s not just about the bigger picture—our personal choices 
+                    shape the world we live in.
+                </p>
+            </div>
+            <div class="personal-experience-image"></div> <!-- Image beside the paragraph -->
+        </div>
+
+        <!-- New Section: Tasks and Steps for Reducing Carbon Footprints -->
+        <div class="tasks-steps">
+            <h2>Steps and Tasks to Reduce Carbon Footprints</h2>
+            <p>
+                With applications like <strong>Cool the Globe</strong>, we can actively participate in reducing our carbon footprints by tracking and managing our daily actions. The app encourages individuals to take responsibility by making eco-friendly choices that reduce the carbon emissions we generate. Here are some key steps we can take:
+            </p>
+            <ul>
+                <li>Opt for public transportation, cycling, or walking instead of using private vehicles.</li>
+                <li>Adopt renewable energy solutions such as solar panels or wind energy.</li>
+                <li>Reduce plastic usage and increase recycling efforts.</li>
+                <li>Conserve electricity by turning off lights and appliances when not in use.</li>
+                <li>Follow a plant-based diet or reduce meat consumption, which significantly lowers carbon emissions.</li>
+                <li>Plant trees and support reforestation efforts in your community.</li>
+            </ul>
+            <p>
+                Each of these steps, when applied consistently, contributes to cooling the planet and reversing the damaging effects of climate change.
+            </p>
+        </div>
+
+        <!-- New Section: Consequences of Inaction -->
+        <div class="consequences">
+            <h2>The Consequences of Not Acting Now</h2>
+            <p>
+                Failing to take immediate action to combat climate change will result in dire consequences for future generations. If we continue to ignore the signs, we could face:
+            </p>
+            <ul>
+                <li>More frequent and severe natural disasters such as floods, hurricanes, and wildfires.</li>
+                <li>Rising sea levels that will displace millions of people in coastal regions.</li>
+                <li>Global food shortages due to changes in agricultural conditions and weather patterns.</li>
+                <li>Mass extinction of species unable to adapt to rapidly changing environments.</li>
+                <li>Worsening air quality and increasing health problems due to pollution.</li>
+            </ul>
+            <p>
+                The time to act is now. The longer we wait, the more irreversible the damage becomes. It's crucial that we make changes on both individual and collective levels to secure a healthy planet for future generations.
+            </p>
+        </div>
+
+        <div class="earth-image"></div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join the Movement</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background-color: #1a1a1a;
+            color: #ffffff;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+        }
+        .header .logo {
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+        .header .logo span {
+            color: #00ff99;
+        }
+        .header .nav {
+            display: flex;
+            gap: 20px;
+        }
+        .header .nav a {
+            color: #00ff99;
+            text-decoration: none;
+        }
+        .home-button {
+            margin: 10px 50px;
+            padding: 10px 20px;
+            background-color: #b19cd9;
+            border: none;
+            border-radius: 20px;
+            color: #000;
+            font-size: 1em;
+            cursor: pointer;
+        }
+        .social-links {
+            display: flex;
+            gap: 20px;
+        }
+        .social-links a {
+            color: #00ff99;
+            font-size: 1.2em;
+        }
+        .container {
+            display: flex;
+            justify-content: space-between;
+            padding: 50px;
+        }
+        .left-section {
+            max-width: 40%;
+        }
+        .left-section h1 {
+            font-size: 4em;
+            margin: 0;
+        }
+        .left-section h1 span {
+            color: #b19cd9;
+        }
+        .left-section .address, .left-section .contact {
+            margin-top: 20px;
+        }
+        .left-section .address i, .left-section .contact i {
+            margin-right: 10px;
+        }
+        .right-section {
+            max-width: 50%;
+        }
+        .right-section form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .right-section form input, .right-section form textarea, .right-section form select {
+            background-color: #333;
+            border: none;
+            padding: 15px;
+            color: #ffffff;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+        .right-section form textarea {
+            grid-column: span 2;
+            resize: none;
+            height: 150px;
+        }
+        .right-section form button {
+            grid-column: span 2;
+            background-color: #00ff99;
+            border: none;
+            padding: 15px;
+            color: #000;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        function handleSubmit(event) {
+            event.preventDefault(); // Prevent the default form submission
+            // Add form submission logic here (e.g., send data to server)
+            window.location.href = 'index.html'; // Redirect to index.html
+        }
+    </script>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">
+            GO GREEN
+            <span>GLOBE</span>
+        </div>
+        <div class="nav social-links">
+            <a href="https://www.linkedin.com/in/harshit-sharma-12074127a" target="_blank"><i class="fab fa-linkedin"></i></a>
+            <a href="https://www.instagram.com/cosmo_harsh" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.facebook.com/Harshit Vishwakrama" target="_blank"><i class="fab fa-facebook"></i></a>
+            <a href="mailto:developer@example.com"><i class="fas fa-envelope"></i></a>
+        </div>
+    </div>
+    <button class="home-button" onclick="window.location.href='index.html';">Home</button>
+    <div class="container">
+        <div class="left-section">
+            <h1>Join the <span>Movement</span></h1>
+            <div class="address">
+                <i class="fas fa-map-marker-alt"></i>
+                <p>
+                    PSIT kanpur <br/>
+                    National Highway Bhauti near Chakarpur Mandi<br/>
+        
+                </p>
+            </div>
+            <div class="contact">
+                <i class="fas fa-phone-alt"></i>
+                <p>
+                    Call us<br/>
+                    Phone:
+                </p>
+            </div>
+            <div class="contact">
+                <i class="fas fa-envelope"></i>
+                <p>
+                    team@gogreen.org<br/>
+                    harshit@gogreen.org
+                </p>
+            </div>
+        </div>
+        <div class="right-section">
+            <form onsubmit="handleSubmit(event);">
+                <input placeholder="Name *" type="text" required />
+                <input placeholder="Organization name" type="text" />
+                <input placeholder="Email ID" type="email" required />
+                <div style="display: flex; align-items: center;">
+                    <img alt="Indian flag" height="20" src="https://oaidalleapiprodscus.blob.core.windows.net/private/org-RcpoXHkzChYnDbFAyeQ8tamr/user-ehrvabJ3DufsCu8YJ7PqY5gl/img-HdfHRdGCQa8cRJaOLFhc3c4J.png?st=2024-09-21T09%3A08%3A20Z&se=2024-09-21T11%3A08%3A20Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=d505667d-d6c1-4a0a-bac7-5c84a87759f8&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2024-09-20T23%3A37%3A04Z&ske=2024-09-21T23%3A37%3A04Z&sks=b&skv=2024-08-04&sig=APCr3R%2BkvEdKlIX9jHfaPXTTYvRPLsCeMV%2BFRUqMpj0%3D" style="margin-right: 10px;" width="20" />
+                    <input placeholder="Contact no" type="text" />
+                </div>
+                <select required>
+                    <option value="">Subject *</option>
+                    <option value="Inquiry">Inquiry</option>
+                    <option value="Feedback">Feedback</option>
+                    <option value="Support">Support</option>
+                </select>
+                <textarea placeholder="Message *" required></textarea>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

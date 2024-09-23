@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Go Green</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet"/>
+
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            font-family: 'Playfair Display', serif;
+            color: white;
+            overflow-x: hidden;
+        }
+        .container {
+            background: url('./back1.jpeg') no-repeat center center/cover;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+        .header {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .header .logo span {
+            color: #00C896;
+        }
+        .header .nav {
+            display: flex;
+            gap: 20px;
+        }
+        .header .nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+        }
+        .header .join-us {
+            background-color: #7D4CDB;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 16px;
+            text-decoration: none;
+            color: white;
+            cursor: pointer;
+        }
+        .header .menu-icon {
+            font-size: 24px;
+            cursor: pointer;
+        }
+        .sidebar {
+            position: fixed;
+            top: 0;
+            right: -250px;
+            width: 250px;
+            height: 100%;
+            background-color: #333;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: right 0.3s ease;
+        }
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            margin: 10px 0;
+        }
+        .sidebar a:hover {
+            text-decoration: underline;
+        }
+        .sidebar .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        .content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .content h1 {
+            font-size: 48px;
+            margin: 0;
+        }
+        .content h1 span {
+            color: #f1f4f3;
+        }
+        .content p {
+            font-size: 20px;
+            margin: 10px 0 20px;
+        }
+        .footer {
+            background-color: #222;
+            width: 100%;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        .footer .profile-pic {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: url('./image2.jpeg') no-repeat center center/cover;
+            margin-bottom: 20px;
+        }
+        .footer .objective {
+            max-width: 600px;
+            text-align: center;
+            font-size: 18px;
+            color: #ccc;
+        }
+        .registration-form, .login-form {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(0, 0, 0, 0.8);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        .registration-form.show, .login-form.show {
+            display: flex;
+            opacity: 1;
+        }
+        .registration-form form, .login-form form {
+            background-color: rgba(51, 51, 51, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            width: 300px;
+            text-align: left;
+            animation: popUp 0.5s ease;
+        }
+        @keyframes popUp {
+            from {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        .registration-form form h2, .login-form form h2 {
+            margin-top: 0;
+        }
+        .registration-form form input, .registration-form form button, .login-form form input, .login-form form button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+        }
+        .registration-form form button, .login-form form button {
+            background-color: #00C896;
+            color: white;
+            cursor: pointer;
+        }
+        .registration-form .close-btn, .login-form .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 24px;
+            cursor: pointer;
+            color: white;
+        }
+        .task-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .task-container h2 {
+            margin-bottom: 20px;
+        }
+        .task-container .task-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .task-container .task-buttons button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #7D4CDB;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .task-container .task-buttons button:hover {
+            background-color: #5a34a1;
+        }
+    </style>
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.style.right = sidebar.style.right === '-250px' ? '0' : '-250px';
+        }
+
+        function showRegistrationForm() {
+            const form = document.getElementById('registration-form');
+            form.classList.add('show');
+        }
+
+        function hideRegistrationForm() {
+            const form = document.getElementById('registration-form');
+            form.classList.remove('show');
+        }
+
+        function showLoginForm() {
+            const form = document.getElementById('login-form');
+            form.classList.add('show');
+        }
+
+        function hideLoginForm() {
+            const form = document.getElementById('login-form');
+            form.classList.remove('show');
+        }
+
+        function handleRegistration(event) {
+            event.preventDefault();
+            hideRegistrationForm();
+            setTimeout(() => {
+                showLoginForm();
+            }, 1000);
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+            hideLoginForm();
+            setTimeout(() => {
+                window.location.href = 'joinus.html';
+            }, 1000);
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                GO <span>GREEN</span>
+            </div>
+            <div class="nav">
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <div class="join-us" onclick="showRegistrationForm()">Join us</div>
+            <i class="fas fa-bars menu-icon" onclick="toggleSidebar()"></i>
+        </div>
+        <div class="content">
+            <h1>BE THE <span>CHANGE!</span></h1>
+            <p>Join our Citizen-led movement for Climate Action</p>
+        </div>
+        <div class="sidebar" id="sidebar">
+            <i class="fas fa-times close-btn" onclick="toggleSidebar()"></i>
+            <a href="https://www.linkedin.com/in/harshit-sharma-12074127a"><i class="fab fa-linkedin"></i> LinkedIn</a>
+            <a href="https://www.instagram.com/cosmo_harsh"><i class="fab fa-instagram"></i> Instagram</a>
+            <a href="mailto:2k22.cse.2211511@gmail.com"><i class="fas fa-envelope"></i> Email</a>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="profile-pic"></div>
+        <div class="objective">Reduce carbon footprints and promote sustainable living. Join us in our mission to make the world a greener place.</div>
+    </div>
+    <div class="registration-form" id="registration-form">
+        <i class="fas fa-times close-btn" onclick="hideRegistrationForm()"></i>
+        <form onsubmit="handleRegistration(event)">
+            <h2>Registration Form</h2>
+            <input placeholder="Name" type="text" required/>
+            <input placeholder="Email" type="email" required/>
+            <input placeholder="Password" type="password" required/>
+            <button type="submit">Register</button>
+        </form>
+    </div>
+    <div class="login-form" id="login-form">
+        <i class="fas fa-times close-btn" onclick="hideLoginForm()"></i>
+        <form onsubmit="handleLogin(event)">
+            <h2>Login Form</h2>
+            <input placeholder="Email" type="email" required/>
+            <input placeholder="Password" type="password" required/>
+            <button type="submit">Login</button>
+        </form>
+    </div>
+</body>
+</html>

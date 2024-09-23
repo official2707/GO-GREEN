@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Manager</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Bebas Neue', cursive;
+            background: linear-gradient(to right, black 30%,rgb(62, 109, 62) 70%);
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+            cursor: none;
+        }
+
+        .sidebar {
+            width: 200px;
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease;
+            transform: translateX(0);
+            background: red; /* Change sidebar background to red */
+        }
+
+        .sidebar.hidden {
+            transform: translateX(-100%);
+        }
+        .sidebar h2, .sidebar h3 {
+            font-size: 24px;
+            color: #ecf0f1;
+            margin-bottom: 20px;
+        }
+        #completedTasksList {
+            color: #ffffff;
+            margin-top: 10px;
+        }
+        .sidebar a {
+            display: block;
+            color: #bdc3c7;
+            text-decoration: none;
+            padding: 10px 0;
+            font-size: 20px;
+        }
+        .sidebar a:hover {
+            background-color: #34495e;
+        }
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            position: relative;
+            overflow-y: auto;
+            margin-left: 250px;
+            color: #eaedef;
+        }
+        .task-item {
+            display: flex;
+            align-items: center;
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+        .task-item input[type="checkbox"] {
+            margin-right: 10px;
+            transform: scale(1.5);
+        }
+        .notification, .task-details {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+        .timer {
+            font-size: 24px;
+            margin-top: 20px;
+        }
+        .confetti {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        .cursor {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: transparent;
+            border-radius: 50%;
+            pointer-events: none;
+            box-shadow: 0 0 10px #39ff14, 0 0 20px #39ff14, 0 0 30px #39ff14;
+            transition: transform 0.1s ease;
+        }
+        .toggle-sidebar {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: #c01414;
+            color: #ecf0f1;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body>
+    <button class="toggle-sidebar" onclick="toggleSidebar()">☰</button>
+    <div class="sidebar" id="sidebar">
+        <div class="user-info">
+            <h2>Harshit</h2>
+        </div>
+        <div class="info-column">
+            <h3>Day: <span id="dayNumber">1</span></h3>
+            <h3>Completed Tasks: <span id="todayTasksCount">0</span></h3>
+            <ul id="completedTasksList"></ul>
+        </div>
+        <a href="#" id="nextDayLink">Next Day</a>
+    </div>
+    <div class="main-content" id="mainContent">
+        <h1>Today</h1>
+        <div class="task-count" id="taskCount">3 tasks</div>
+        <div class="task-list" id="taskList"></div>
+        <div class="notification" id="notification" style="display: none;"></div>
+        <div class="task-details" id="taskDetails">
+            <div class="consequence" id="consequenceMessage"></div>
+            <div class="carbon-footprint" id="carbonFootprintMessage"></div>
+        </div>
+        <div class="timer" id="timer">
+            Time until next day: <span id="countdown">24:00:00</span>
+        </div>
+    </div>
+    <div class="confetti" id="confetti"></div>
+    <div class="cursor" id="cursor"></div>
+
+    <script>
+        let totalCarbonFootprint = 0;
+        let dayNumber = 1;
+        let currentTaskIndex = 0;
+
+        const tasks = [
+            { text: 'Avoid using plastic bottles', carbon: 0.5, consequence: 'By avoiding plastic bottles, you help reduce ocean pollution and protect marine life.' },
+            { text: 'Use bicycle instead of car', carbon: 1.0, consequence: 'Cycling instead of driving decreases air pollution and promotes better health.' },
+            { text: 'Plant a tree', carbon: 2.0, consequence: 'Planting a tree absorbs CO2, providing cleaner air and habitat for wildlife.' },
+            { text: 'Turn off lights when not in use', carbon: 0.3, consequence: 'You save electricity, reducing your carbon footprint and energy bill.' },
+            { text: 'Use reusable shopping bags', carbon: 0.2, consequence: 'This prevents single-use plastics from ending up in landfills or oceans.' },
+            { text: 'Take shorter showers', carbon: 0.4, consequence: 'Conserving water reduces energy consumption used to heat water.' },
+            { text: 'Compost food waste', carbon: 0.6, consequence: 'Composting reduces landfill waste and enriches soil quality.' },
+            { text: 'Unplug electronics when not in use', carbon: 0.3, consequence: 'Reduces unnecessary energy consumption known as “phantom loads.”' },
+            { text: 'Use energy-efficient bulbs', carbon: 0.5, consequence: 'Energy-efficient bulbs use less electricity and last longer.' },
+            { text: 'Recycle paper and plastic', carbon: 0.7, consequence: 'Recycling saves energy and reduces the need for raw material extraction.' },
+            { text: 'Buy local produce', carbon: 0.4, consequence: 'Locally grown food reduces transportation emissions and supports the local economy.' },
+            { text: 'Use a refillable coffee cup', carbon: 0.2, consequence: 'By using a refillable cup, you avoid single-use plastics and reduce waste.' },
+            { text: 'Install a water-saving showerhead', carbon: 0.8, consequence: 'Helps reduce water consumption and saves energy needed to heat water.' },
+            { text: 'Carpool to work', carbon: 1.2, consequence: 'Carpooling reduces traffic congestion and lowers emissions per person.' },
+            { text: 'Use public transportation', carbon: 1.0, consequence: 'Public transport is more efficient, reducing overall CO2 emissions.' },
+            { text: 'Donate old clothes', carbon: 0.5, consequence: 'Donating clothes extends their lifecycle, reducing waste in landfills.' },
+            { text: 'Grow your own vegetables', carbon: 1.5, consequence: 'Growing food at home reduces transport-related carbon emissions.' },
+            { text: 'Air-dry your clothes', carbon: 1.0, consequence: 'Air-drying saves energy that would otherwise be used by a dryer.' },
+            { text: 'Use a reusable water bottle', carbon: 0.5, consequence: 'Prevents plastic waste and reduces production demand for single-use bottles.' },
+            { text: 'Switch to a vegetarian meal', carbon: 1.0, consequence: 'Reducing meat consumption decreases methane emissions and water usage.' },
+            { text: 'Pick up litter at a local park', carbon: 0.4, consequence: 'Helps maintain a clean environment and prevents pollution.' },
+            { text: 'Use a clothesline instead of a dryer', carbon: 1.2, consequence: 'Reduces energy usage and your electricity bill.' },
+            { text: 'Install solar panels at home', carbon: 3.0, consequence: 'Solar energy significantly reduces reliance on fossil fuels.' },
+            { text: 'Turn off your computer at night', carbon: 0.5, consequence: 'Shutting down saves energy and reduces carbon emissions.' },
+            { text: 'Choose e-billing instead of paper', carbon: 0.2, consequence: 'Reduces paper waste and lowers emissions from mail delivery.' },
+            { text: 'Switch to a plant-based milk', carbon: 0.6, consequence: 'Plant-based milk production uses less water and generates lower emissions than dairy.' },
+            { text: 'Upgrade to energy-efficient appliances', carbon: 2.5, consequence: 'Energy-efficient appliances use less power and reduce household emissions.' },
+            { text: 'Use a hand towel instead of paper towels', carbon: 0.3, consequence: 'Reduces deforestation and saves energy used in paper production.' },
+            { text: 'Walk instead of driving short distances', carbon: 1.0, consequence: 'Walking reduces fuel consumption and promotes physical health.' },
+            { text: 'Support renewable energy projects', carbon: 2.0, consequence: 'Investing in renewables reduces reliance on fossil fuels.' }
+        ];
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('hidden');
+        }
+
+        function loadTasks() {
+            const taskList = document.getElementById('taskList');
+            taskList.innerHTML = ''; // Clear current tasks
+            for (let i = 0; i < 3 && currentTaskIndex < tasks.length; i++, currentTaskIndex++) {
+                const task = tasks[currentTaskIndex];
+                const taskItem = document.createElement('div');
+                taskItem.className = 'task-item';
+                taskItem.innerHTML = `<input type="checkbox" data-carbon="${task.carbon}" data-consequence="${task.consequence}"><label>${task.text}</label>`;
+                taskList.appendChild(taskItem);
+            }
+            updateTaskCount();
+            addTaskEventListeners();
+        }
+
+        function addTaskEventListeners() {
+            const taskItems = document.querySelectorAll('.task-item input[type="checkbox"]');
+            taskItems.forEach(taskItem => {
+                taskItem.addEventListener('change', function() {
+                    if (this.checked) {
+                        const carbonReduction = parseFloat(this.getAttribute('data-carbon'));
+                        const consequenceMessage = this.getAttribute('data-consequence');
+                        totalCarbonFootprint += carbonReduction;
+                        updateCarbonFootprint();
+                        showNotification('Task completed! Congrats, Harshit!');
+                        showConsequence(consequenceMessage);
+                        addCompletedTask(this.nextElementSibling.textContent);
+                        this.parentElement.remove();
+                        updateTodayTasksCount();
+
+                        // Check if all tasks are completed, and load new tasks for the next day
+                        if (document.querySelectorAll('.task-item').length === 0) {
+                            loadTasks();
+                        }
+                    }
+                });
+            });
+        }
+
+        function showConsequence(message) {
+            const consequenceMessage = document.getElementById('consequenceMessage');
+            consequenceMessage.textContent = message;
+            consequenceMessage.style.display = 'block';
+            setTimeout(() => {
+                consequenceMessage.style.display = 'none';
+            }, 5000);
+        }
+
+        function updateTaskCount() {
+            const taskCount = document.getElementById('taskCount');
+            const taskList = document.getElementById('taskList');
+            const taskItems = taskList.getElementsByClassName('task-item');
+            taskCount.textContent = `${taskItems.length} task${taskItems.length !== 1 ? 's' : ''}`;
+        }
+
+        function updateCarbonFootprint() {
+            const carbonAmount = document.getElementById('carbonFootprintMessage');
+            carbonAmount.textContent = `Total carbon footprint reduction: ${totalCarbonFootprint.toFixed(2)} kg`;
+        }
+
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.style.display = 'block';
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
+        }
+
+        function addCompletedTask(taskText, carbonReduction) {
+    const completedTasksList = document.getElementById('completedTasksList');
+    const taskItem = document.createElement('li');
+    taskItem.textContent = taskText;
+    completedTasksList.appendChild(taskItem);
+
+    // Save the completed task to the backend
+    fetch('http://localhost:5000/api/tasks/completed', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ taskText, carbonReduction })
+    })
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(error => console.error('Error:', error));
+}
+
+
+        function updateTodayTasksCount() {
+            const completedTasksList = document.getElementById('completedTasksList');
+            document.getElementById('todayTasksCount').textContent = completedTasksList.children.length;
+        }
+
+        function startCountdown() {
+            let totalSeconds = 24 * 60 * 60; // 24 hours in seconds
+
+            const countdownElement = document.getElementById('countdown');
+            const interval = setInterval(() => {
+                const hours = Math.floor(totalSeconds / 3600);
+                const minutes = Math.floor((totalSeconds % 3600) / 60);
+                const seconds = totalSeconds % 60;
+
+                countdownElement.textContent = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+
+                if (totalSeconds <= 0) {
+                    clearInterval(interval);
+                    alert('Today\'s tasks are completed! Come back tomorrow.');
+                }
+                totalSeconds--;
+            }, 1000);
+        }
+
+        document.addEventListener('mousemove', function(e) {
+            const cursor = document.getElementById('cursor');
+            cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+        });
+
+        document.getElementById('nextDayLink').addEventListener('click', function() {
+            dayNumber++;
+            document.getElementById('dayNumber').textContent = dayNumber;
+            currentTaskIndex = 0; // Reset task index for the next day
+            loadTasks(); // Load new tasks for the next day
+            startCountdown(); // Restart countdown
+        });
+
+        window.onload = function() {
+            loadTasks();
+            startCountdown();
+        };
+    </script>
+</body>
+</html>
